@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BucketList"
+             xmlns:views="clr-namespace:BucketList.Views"
+             xmlns:viewmodels="clr-namespace:BucketList.ViewModels"
+             x:Class="BucketList.MainPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+        <CollectionView ItemsSource="{Binding Tasks}"
+                        SelectionMode="Single" 
+                        SelectionChangedCommand="{Binding ShowTaskCommand}"
+                        SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid HeightRequest="170" Margin="10, 0, 10, 0"
+                          BackgroundColor="AliceBlue">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.25*"/>
+                        </Grid.RowDefinitions>
+                        <Label Text="{Binding Title}" FontSize="20" Margin="10"/>
+                        <VerticalStackLayout Grid.Row="1">
+                            <BoxView Color="Gray" HeightRequest="1"/>
+                            <Button BackgroundColor="Red"
+                                    FontSize="5"
+                                    HeightRequest="25"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MainViewModel}}, Path=RemoveTaskCommand}"
+                                    CommandParameter="{Binding}"
+                                    WidthRequest="50"
+                                    HorizontalOptions="End"
+                                    Margin="0, 2, 10, 0" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button 
+            Grid.Row="1"
+            Text="New task" 
+            Margin="10"
+            Command="{Binding AddTaskCommand}"
+            FontSize="18">
+            <Button.Triggers>
+                <Trigger TargetType="{x:Type Button}" 
+                         Property="Button.IsPressed" 
+                         Value="True">
+                    <Trigger.EnterActions>
+                        <views:ButtonAnimation/>
+                    </Trigger.EnterActions>
+                </Trigger>
+            </Button.Triggers>
+        </Button>
+    </Grid>
+</ContentPage>
