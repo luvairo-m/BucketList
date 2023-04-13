@@ -24,6 +24,7 @@ namespace BucketList.ViewModels
                     { "TaskObject", (TaskModel)param }
                 });
             });
+
             AddTaskCommand = new Command(async () => await Shell.Current.GoToAsync("//TaskAddingPage"));
             RemoveTaskCommand = new Command((param) => Tasks.Remove((TaskModel)param));
         }

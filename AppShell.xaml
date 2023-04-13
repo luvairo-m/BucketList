@@ -7,7 +7,7 @@
     xmlns:views="clr-namespace:BucketList.Views"
     Shell.FlyoutBehavior="Disabled">
     <ShellContent
-        Title="BucketList (MVP): v. 0.1"
+        Title="BucketList (MVP): v. 0.2"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
     <ShellContent
