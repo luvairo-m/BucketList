@@ -3,22 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BucketList"
              xmlns:views="clr-namespace:BucketList.Views"
+             xmlns:converters="clr-namespace:BucketList.Converters"
              xmlns:viewmodels="clr-namespace:BucketList.ViewModels"
+             xmlns:animations="clr-namespace:BucketList.Animations"
              x:Class="BucketList.MainPage"
              BackgroundColor="{StaticResource Background}">
     <ContentPage.Resources>
-        <x:Array x:Key="testArray" Type="{x:Type x:String}">
-            <x:String>Grigory</x:String>
-            <x:String>Mihail</x:String>
-        </x:Array>
+        <Style TargetType="Frame">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="Red" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
     </ContentPage.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
-        <CollectionView ItemsSource="{Binding Tasks}"
-                        SelectionMode="Single" >
+        <CollectionView ItemsSource="{Binding Tasks}" SelectionMode="Single">
             <!--SelectionChangedCommand="{Binding ShowTaskCommand}"
                         SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">-->
             <!--<CollectionView.ItemsLayout>
@@ -53,10 +64,17 @@
                             <Label 
                                 Margin="0, 10, 0, 0"
                                 Grid.Row="2"
-                                Text="13.04.2023 | 18:03"
+                                Text="{Binding CreationTime, Converter={converters:TimePrettifyerConverter}}"
                                 FontSize="12"
                                 TextColor="White"/>
                         </Grid>
+                        <!--<Frame.Triggers>
+                            <EventTrigger TargetType="Frame" Event="MouseOver">
+                                <EventTrigger.EnterActions>
+                                    <animations:ScaleAnimation/>
+                                </EventTrigger.EnterActions>
+                            </EventTrigger>
+                        </Frame.Triggers>-->
                     </Frame>
                     <!--<Grid HeightRequest="170" Margin="10, 0, 10, 0"
                           BackgroundColor="AliceBlue">
@@ -93,7 +111,7 @@
                          Property="Button.IsPressed" 
                          Value="True">
                     <Trigger.EnterActions>
-                        <views:ButtonAnimation/>
+                        <animations:ScaleAnimation/>
                     </Trigger.EnterActions>
                 </Trigger>
             </Button.Triggers>

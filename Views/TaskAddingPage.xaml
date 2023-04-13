@@ -3,31 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BucketList.TaskAddingPage"
              xmlns:local="clr-namespace:BucketList"
+             xmlns:animations="clr-namespace:BucketList.Animations"
              xmlns:views="clr-namespace:BucketList.Views">
     <VerticalStackLayout>
-        <Label Text="Type task title:" 
+        <Label Text="{StaticResource title-label-text}" 
                Margin="10, 10, 0, 0"
                FontSize="20"/>
         <Entry Margin="10, 5, 0, 0" 
                Text="{Binding TaskTitle, Mode=TwoWay}"/>
-        <Label Text="Type task description:" 
+        <Label Text="{StaticResource description-label-text}" 
                Margin="10, 10, 0, 0"
                FontSize="20"/>
         <Entry Margin="10, 5, 0, 0"
                Text="{Binding TaskDescription, Mode=TwoWay}"/>
-        <Button Text="Accept" 
+        <Button Text="{StaticResource applying-button-text}" 
                 Margin="10" 
                 FontSize="18"
                 Command="{Binding CreateTaskCommand}">
             <Button.Triggers>
                 <Trigger TargetType="Button" Property="Button.IsPressed" Value="True">
                     <Trigger.EnterActions>
-                        <views:ButtonAnimation/>
+                        <animations:ScaleAnimation/>
                     </Trigger.EnterActions>
                 </Trigger>
             </Button.Triggers>
         </Button>
-        <Button Text="Cancel" 
+        <Button Text="{StaticResource cancellation-button-text}" 
                 Margin="10, 0, 10, 0" 
                 FontSize="18"
                 Command="{Binding CancelCreationCommand}"
@@ -35,7 +36,7 @@
             <Button.Triggers>
                 <Trigger TargetType="Button" Property="Button.IsPressed" Value="True">
                     <Trigger.EnterActions>
-                        <views:ButtonAnimation/>
+                        <animations:ScaleAnimation/>
                     </Trigger.EnterActions>
                 </Trigger>
             </Button.Triggers>
