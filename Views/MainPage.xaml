@@ -68,13 +68,6 @@
                                 FontSize="12"
                                 TextColor="White"/>
                         </Grid>
-                        <!--<Frame.Triggers>
-                            <EventTrigger TargetType="Frame" Event="MouseOver">
-                                <EventTrigger.EnterActions>
-                                    <animations:ScaleAnimation/>
-                                </EventTrigger.EnterActions>
-                            </EventTrigger>
-                        </Frame.Triggers>-->
                     </Frame>
                     <!--<Grid HeightRequest="170" Margin="10, 0, 10, 0"
                           BackgroundColor="AliceBlue">

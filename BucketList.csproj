@@ -50,16 +50,8 @@
 	    <DependentUpon>TaskAddingPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
-  <ItemGroup>
-    <Compile Update="Views\ShowTaskPage.xaml.cs">
-      <DependentUpon>TaskAddingPage.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\ShowTaskPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\TaskAddingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

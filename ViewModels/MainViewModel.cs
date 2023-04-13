@@ -8,6 +8,8 @@ namespace BucketList.ViewModels
     {
         public ObservableCollection<TaskModel> Tasks { get; } = new();
 
+        private const string addingTaskPageRoute = "//" + nameof(TaskAddingPage);
+
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (!query.ContainsKey("TaskObject"))
@@ -21,17 +23,6 @@ namespace BucketList.ViewModels
         private void RemoveTask(object param) => Tasks.Remove((TaskModel)param);
 
         [RelayCommand]
-        private async void ShowTask(object selectedTask)
-        {
-            var arguments = new Dictionary<string, object>()
-            {
-                ["TaskObject"] = (TaskModel)selectedTask
-            };
-
-            await Shell.Current.GoToAsync("//ShowTaskPage", arguments);
-        }
-
-        [RelayCommand]
-        private async void AddTask() => await Shell.Current.GoToAsync("//TaskAddingPage");
+        private async void AddTask() => await Shell.Current.GoToAsync(addingTaskPageRoute);
     }
 }

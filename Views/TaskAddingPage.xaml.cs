@@ -4,7 +4,7 @@ namespace BucketList;
 
 public partial class TaskAddingPage : ContentPage
 {
-	private const string homePage = "//MainPage";
+    private const string mainPageRoute = "//" + nameof(MainPage);
 
 	public TaskAddingPage()
 	{
@@ -12,9 +12,13 @@ public partial class TaskAddingPage : ContentPage
 		InitializeComponent();
 	}
 
+    /// <summary>
+    /// Метод переопределяет стандартное поведение при нажатии кнопки "Назад"
+    /// на страницах, являющимися дочерними к MainPage.
+    /// </summary>
     protected override bool OnBackButtonPressed()
     {
-		Shell.Current.GoToAsync(homePage);
+		Shell.Current.GoToAsync(mainPageRoute);
         return true;
     }
 }

@@ -14,8 +14,4 @@
         Title="{StaticResource adding-header-text}"
         ContentTemplate="{DataTemplate local:TaskAddingPage}"
         Route="TaskAddingPage" />
-    <ShellContent
-        Title="Task information"
-        ContentTemplate="{DataTemplate views:ShowTaskPage}"
-        Route="ShowTaskPage" />
 </Shell>
