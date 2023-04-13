@@ -1,14 +1,16 @@
 ﻿namespace BucketList.Models
 {
-    internal class TaskModel
+    public class TaskModel
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string Title { get; private set; }
+        public string Description { get; private set; }
+        public DateTime CreationTime { get; private set; }  
 
-        internal TaskModel(string title, string description)
+        public TaskModel(string title, string description)
         {
             Title = title;
             Description = description;
+            CreationTime = DateTime.Now;
         }   
     }
 }

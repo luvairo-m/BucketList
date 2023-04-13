@@ -1,63 +1,43 @@
 ﻿using BucketList.Models;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BucketList.ViewModels
 {
-    internal class TaskAddingViewModel : INotifyPropertyChanged
+    internal partial class TaskAddingViewModel : ObservableObject
     {
-        public ICommand CancelCreationCommand { get; }
-        public ICommand CreateTaskCommand { get; }
-        public event PropertyChangedEventHandler PropertyChanged;
-        public string TaskTitle
-        {
-            get => taskTitle;
-            set
-            {
-                taskTitle = value;
-                OnPropertyChanged(nameof(TaskTitle));   
-            }
-        }
-        public string TaskDescription
-        {
-            get => taskDescription;
-            set
-            {
-                taskDescription = value;    
-                OnPropertyChanged(nameof(TaskDescription));
-            }
-        }
+        public bool CanTaskCreate => TaskTitle != null && TaskDescription != null &&
+            TaskTitle.Length != 0 && TaskDescription.Length != 0;
 
+        private const string mainPage = "//MainPage";
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(CreateTaskCommand))]
         private string taskTitle;
-        private string taskDescription;  
 
-        internal TaskAddingViewModel()
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(CreateTaskCommand))]
+        private string taskDescription;
+
+        [RelayCommand]
+        private async void CancelCreation()
         {
-            CancelCreationCommand = new Command(async () =>
-            {
-                await Shell.Current.GoToAsync("//MainPage");
-                ClearFields();
-            });
-
-            CreateTaskCommand = new Command(async () =>
-            {
-                await Shell.Current.GoToAsync("//MainPage", new Dictionary<string, object>
-                {
-                    { "TaskObject", new TaskModel(TaskTitle, TaskDescription) }
-                });
-
-                ClearFields();
-            }, () => taskTitle != null && taskDescription != null &&
-            taskTitle.Length != 0 && taskDescription.Length != 0);
+            await Shell.Current.GoToAsync(mainPage);
+            ClearInputFields();
         }
 
-        public void OnPropertyChanged([CallerMemberName] string property = "")
+        [RelayCommand(CanExecute = nameof(CanTaskCreate))]  
+        private async void CreateTask()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-            ((Command)CreateTaskCommand).ChangeCanExecute();
+            var arguments = new Dictionary<string, object>()
+            {
+                ["TaskObject"] = new TaskModel(TaskTitle, TaskDescription)
+            };
+
+            await Shell.Current.GoToAsync(mainPage, arguments);
+            ClearInputFields();
         }
 
-        private void ClearFields() => (TaskTitle, TaskDescription) = (null, null);
+        private void ClearInputFields() => (TaskTitle, TaskDescription) = (null, null);
     }
 }
