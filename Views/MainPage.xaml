@@ -8,12 +8,16 @@
              xmlns:animations="clr-namespace:BucketList.Animations"
              x:Class="BucketList.MainPage"
              BackgroundColor="{StaticResource Background}">
-    <ContentPage.Resources>
-        <Style TargetType="Frame">
+    <!--<ContentPage.Resources>
+        <Style TargetType="Grid">
             <Setter Property="VisualStateManager.VisualStateGroups">
                 <VisualStateGroupList>
                     <VisualStateGroup x:Name="CommonStates">
-                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="DodgerBlue"/>
+                            </VisualState.Setters>
+                        </VisualState>
                         <VisualState x:Name="Selected">
                             <VisualState.Setters>
                                 <Setter Property="BackgroundColor" Value="Red" />
@@ -23,26 +27,26 @@
                 </VisualStateGroupList>
             </Setter>
         </Style>
-    </ContentPage.Resources>
+    </ContentPage.Resources>-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
-        <CollectionView ItemsSource="{Binding Tasks}" SelectionMode="Single">
+        <CollectionView ItemsSource="{Binding Tasks}" 
+                        SelectionMode="Single"
+                        Margin="10">
             <!--SelectionChangedCommand="{Binding ShowTaskCommand}"
                         SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">-->
-            <!--<CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15"/>
-            </CollectionView.ItemsLayout>-->
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame Margin="10, 10, 10, 0"
-                           HeightRequest="100"
+                    <Frame HeightRequest="100"
                            MinimumHeightRequest="95"
                            Padding="13" 
                            CornerRadius="20"
-                           BackgroundColor="DodgerBlue"
                            BorderColor="Transparent">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -51,23 +55,46 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Label 
+                                LineBreakMode="TailTruncation"
                                 Text="{Binding Title}"
                                 FontSize="19" 
                                 TextColor="White"
                                 FontAttributes="Bold"/>
                             <Label 
+                                LineBreakMode="TailTruncation"
                                 Margin="0, 2, 0, 0"
                                 Grid.Row="1"
                                 Text="{Binding Description}"
                                 FontSize="16" 
                                 TextColor="White"/>
                             <Label 
+                                LineBreakMode="TailTruncation"
                                 Margin="0, 10, 0, 0"
                                 Grid.Row="2"
                                 Text="{Binding CreationTime, Converter={converters:TimePrettifyerConverter}}"
                                 FontSize="12"
                                 TextColor="White"/>
                         </Grid>
+                        <Frame.Style>
+                            <Style TargetType="Frame">
+                                <Setter Property="VisualStateManager.VisualStateGroups">
+                                    <VisualStateGroupList>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="DodgerBlue"/>
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                            <VisualState x:Name="Selected">
+                                                <VisualState.Setters>
+                                                    <Setter Property="BackgroundColor" Value="Red" />
+                                                </VisualState.Setters>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateGroupList>
+                                </Setter>
+                            </Style>
+                        </Frame.Style>
                     </Frame>
                     <!--<Grid HeightRequest="170" Margin="10, 0, 10, 0"
                           BackgroundColor="AliceBlue">
@@ -87,7 +114,7 @@
                                     WidthRequest="50"
                                     HorizontalOptions="End"
                                     Margin="0, 2, 10, 0" />
-                            
+
                         </VerticalStackLayout>
                     </Grid>-->
                 </DataTemplate>
