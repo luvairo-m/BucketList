@@ -1,6 +1,6 @@
 ﻿namespace BucketList.Animations
 {
-    class ScaleAnimation : TriggerAction<Button>
+    class ButtonScaleAnimation : TriggerAction<Button>
     {
         protected override async void Invoke(Button sender)
         {

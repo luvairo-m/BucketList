@@ -4,39 +4,56 @@
              x:Class="BucketList.TaskAddingPage"
              xmlns:local="clr-namespace:BucketList"
              xmlns:animations="clr-namespace:BucketList.Animations"
-             xmlns:views="clr-namespace:BucketList.Views">
+             Style="{StaticResource MainContentPageStyle}">
     <VerticalStackLayout>
-        <Label Text="{StaticResource title-label-text}" 
+        <Label Text="Название задачи" 
+               Margin="10, 10, 0, 0"
+               TextColor="White"
+               HorizontalTextAlignment="Center"
+               FontSize="20"/>
+        <Frame Margin="10, 15, 10, 0"
+               BackgroundColor="#2C3594"
+               BorderColor="Transparent">
+            <Entry TextColor="White"
+                   Margin="-10"
+                   Text="{Binding TaskTitle, Mode=TwoWay}"/>
+        </Frame>
+        <Label Text="Описание задачи" 
+               TextColor="White"
+               HorizontalTextAlignment="Center"
                Margin="10, 10, 0, 0"
                FontSize="20"/>
-        <Entry Margin="10, 5, 0, 0" 
-               Text="{Binding TaskTitle, Mode=TwoWay}"/>
-        <Label Text="{StaticResource description-label-text}" 
-               Margin="10, 10, 0, 0"
-               FontSize="20"/>
-        <Entry Margin="10, 5, 0, 0"
-               Text="{Binding TaskDescription, Mode=TwoWay}"/>
-        <Button Text="{StaticResource applying-button-text}" 
-                Margin="10" 
+        <Frame Margin="10, 15, 10, 0"
+               BackgroundColor="#2C3594"
+               CornerRadius="10"
+               BorderColor="Transparent">
+            <Editor HeightRequest="300"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    Text="{Binding TaskDescription, Mode=TwoWay}"
+                    Margin="-10"/>
+        </Frame>
+        <Button Text="Подтвердить" 
+                Margin="10, 15, 10, 0" 
                 FontSize="18"
                 Command="{Binding CreateTaskCommand}">
             <Button.Triggers>
                 <Trigger TargetType="Button" Property="Button.IsPressed" Value="True">
                     <Trigger.EnterActions>
-                        <animations:ScaleAnimation/>
+                        <animations:ButtonScaleAnimation/>
                     </Trigger.EnterActions>
                 </Trigger>
             </Button.Triggers>
         </Button>
-        <Button Text="{StaticResource cancellation-button-text}" 
-                Margin="10, 0, 10, 0" 
+        <Button Text="Отменить" 
+                Margin="10, 10, 10, 0" 
                 FontSize="18"
                 Command="{Binding CancelCreationCommand}"
                 BackgroundColor="Red">
             <Button.Triggers>
                 <Trigger TargetType="Button" Property="Button.IsPressed" Value="True">
                     <Trigger.EnterActions>
-                        <animations:ScaleAnimation/>
+                        <animations:ButtonScaleAnimation/>
                     </Trigger.EnterActions>
                 </Trigger>
             </Button.Triggers>

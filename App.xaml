@@ -9,13 +9,6 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <x:String x:Key="task-adding-button-text">Добавить задачу</x:String>
-            <x:String x:Key="cancellation-button-text">Отменить</x:String>
-            <x:String x:Key="applying-button-text">Подтвердить</x:String>
-            <x:String x:Key="description-label-text">Введите описание:</x:String>
-            <x:String x:Key="title-label-text">Введите название:</x:String>
-            <x:String x:Key="adding-header-text">Создание задачи</x:String>
-            <x:String x:Key="main-header-text">BucketList: v. 0.2</x:String>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

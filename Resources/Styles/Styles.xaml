@@ -176,6 +176,17 @@
         </Setter>
     </Style>
 
+    <Style TargetType="ContentPage" x:Key="MainContentPageStyle">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
+                    <GradientStop Color="{StaticResource BackgroundGradient1}"/>
+                    <GradientStop Color="{StaticResource BackgroundGradient2}" Offset="0.6"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style TargetType="ListView">
         <Setter Property="SeparatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
         <Setter Property="RefreshControlColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />

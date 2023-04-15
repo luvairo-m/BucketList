@@ -9,8 +9,6 @@ namespace BucketList.ViewModels
         public bool CanTaskCreate => TaskTitle != null && TaskDescription != null &&
             TaskTitle.Length != 0 && TaskDescription.Length != 0;
 
-        private const string mainPage = "//MainPage";
-
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(CreateTaskCommand))]
         private string taskTitle;
@@ -22,8 +20,8 @@ namespace BucketList.ViewModels
         [RelayCommand]
         private async void CancelCreation()
         {
-            await Shell.Current.GoToAsync(mainPage);
             ClearInputFields();
+            await Shell.Current.GoToAsync("//" + nameof(MainPage));
         }
 
         [RelayCommand(CanExecute = nameof(CanTaskCreate))]  
@@ -34,7 +32,7 @@ namespace BucketList.ViewModels
                 ["TaskObject"] = new TaskModel(TaskTitle, TaskDescription)
             };
 
-            await Shell.Current.GoToAsync(mainPage, arguments);
+            await Shell.Current.GoToAsync("//" + nameof(MainPage), arguments);
             ClearInputFields();
         }
 
