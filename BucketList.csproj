@@ -37,6 +37,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\check1.png" />
+	  <None Remove="Resources\Images\cross.png" />
 	  <None Remove="Resources\Images\trash.png" />
 	</ItemGroup>
 

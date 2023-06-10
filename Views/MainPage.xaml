@@ -46,7 +46,7 @@
         </Label>
         <CollectionView ItemsSource="{Binding Tasks}" 
                         SelectionMode="Single"
-                        Margin="10, 3, 10, 10"
+                        Margin="10, 0, 10, 10"
                         Grid.Row="1">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
@@ -59,8 +59,8 @@
                             Padding="13"
                             StrokeShape="RoundRectangle 10">
                         <Grid RowDefinitions="Auto, Auto, Auto"
-                              ColumnDefinitions="1*, 0.2*">
-                            <Image 
+                              ColumnDefinitions="1*, 0.3*">
+                            <!--<Image 
                                 HeightRequest="25"
                                 Grid.Column="1"
                                 Grid.RowSpan="3"
@@ -70,7 +70,16 @@
                                         AncestorType={x:Type viewmodels:MainViewModel}}, Path=RemoveTaskCommand}"
                                                           CommandParameter="{Binding}"/>
                                 </Image.GestureRecognizers>
-                            </Image>
+                            </Image>-->
+                            <Label
+                                Grid.Column="1"
+                                Grid.RowSpan="3"
+                                Margin="5, 0, 0, 0"
+                                FontSize="16"
+                                HorizontalTextAlignment="Center"
+                                VerticalTextAlignment="Center"
+                                Text="{Binding UncompletedTasksLine}"
+                                />
                             <Label 
                                 Text="{Binding Title}"
                                 FontSize="19" 

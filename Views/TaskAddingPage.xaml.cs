@@ -13,7 +13,6 @@ public partial class TaskAddingPage : ContentPage
     protected override bool OnBackButtonPressed()
     {
         base.OnBackButtonPressed();
-
 		Shell.Current.GoToAsync("//" + nameof(MainPage));
 		return true;
     }

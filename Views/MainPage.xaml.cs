@@ -1,6 +1,4 @@
 ﻿using BucketList.ViewModels;
-using BucketList.Views;
-using CommunityToolkit.Maui.Views;
 
 namespace BucketList;
 

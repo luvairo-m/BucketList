@@ -4,46 +4,122 @@
              x:Class="BucketList.TaskAddingPage"
              xmlns:local="clr-namespace:BucketList"
              xmlns:animations="clr-namespace:BucketList.Animations"
+             xmlns:viewmodels="clr-namespace:BucketList.ViewModels"
              Style="{StaticResource MainContentPageStyle}">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Сохранить"
                      Command="{Binding CreateTaskCommand}"/>
     </ContentPage.ToolbarItems>
-    <VerticalStackLayout>
-        <Frame Margin="10, 15, 10, 0"
-               BackgroundColor="#2C3594"
-               BorderColor="Transparent">
-            <VerticalStackLayout Margin="-12">
-                <Entry x:Name="title"
-                       TextColor="White"
-                       Text="{Binding TaskTitle, Mode=TwoWay, TargetNullValue=''}"/>
-                <Label HorizontalOptions="End"
-                       Margin="0, 0, 10, 0"
-                       FontSize="12"
-                       Text="{Binding Source={x:Reference title}, Path=Text.Length, StringFormat='Символов: {0}'}"/>
-            </VerticalStackLayout>
-        </Frame>
-        <Frame Margin="10, 15, 10, 0"
-               BackgroundColor="#2C3594"
-               CornerRadius="10"
-               Padding="0"
-               BorderColor="Transparent">
-            <VerticalStackLayout Margin="10">
-                <Editor x:Name="description"
-                        HeightRequest="250"
-                        BackgroundColor="Transparent"
-                        TextColor="White"
-                        Text="{Binding TaskDescription, Mode=TwoWay, TargetNullValue=''}"/>
-                <Label HorizontalOptions="End"
-                       Margin="0, 0, 10, 0"
-                       FontSize="12"
-                       Text="{Binding Source={x:Reference description}, Path=Text.Length, StringFormat='Символов: {0}'}"/>
-            </VerticalStackLayout>
-        </Frame>
-        <Button Text="Подтвердить" 
-                Margin="10, 15, 10, 0" 
-                FontSize="18"
-                Command="{Binding CreateTaskCommand}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".6*"/>
+            <RowDefinition Height=".4*"/>
+        </Grid.RowDefinitions>
+        <VerticalStackLayout>
+            <Label 
+                Margin="0, 10, 0, 0"
+                HorizontalOptions="Center"
+                FontSize="15"
+                Text="Создание цели: заголовок + описание"
+                />
+            <Frame Margin="10, 15, 10, 0"
+                   BackgroundColor="#2C3594"
+                   BorderColor="Transparent">
+                <VerticalStackLayout Margin="-12">
+                    <Entry x:Name="title"
+                            TextColor="White"
+                            Text="{Binding TaskTitle, Mode=TwoWay, TargetNullValue=''}"/>
+                    <Label HorizontalOptions="End"
+                            Margin="0, 0, 10, 0"
+                            FontSize="12"
+                            Text="{Binding Source={x:Reference title}, Path=Text.Length, StringFormat='Символов: {0}'}"/>
+                </VerticalStackLayout>
+            </Frame>
+            <Frame Margin="10, 15, 10, 0"
+                   BackgroundColor="#2C3594"
+                   CornerRadius="10"
+                   Padding="0"
+                   BorderColor="Transparent">
+                <VerticalStackLayout Margin="10">
+                    <Editor x:Name="description"
+                                HeightRequest="120"
+                                BackgroundColor="Transparent"
+                                TextColor="White"
+                                Text="{Binding TaskDescription, Mode=TwoWay, TargetNullValue=''}"/>
+                    <Label HorizontalOptions="End"
+                               Margin="0, 0, 10, 0"
+                               FontSize="12"
+                               Text="{Binding Source={x:Reference description}, Path=Text.Length, StringFormat='Символов: {0}'}"/>
+                </VerticalStackLayout>
+            </Frame>
+            <Label 
+                Margin="0, 10, 0, 0"
+                HorizontalOptions="Center"
+                FontSize="15"
+                Text="Создание подзадач: заголовок"
+                />
+            <Frame Margin="10, 15, 10, 0"
+                       BackgroundColor="#2C3594"
+                       BorderColor="Transparent">
+                <VerticalStackLayout Margin="-12">
+                    <Entry TextColor="White" 
+                           Text="{Binding SubTaskTitle, Mode=TwoWay, TargetNullValue=''}"/>
+                </VerticalStackLayout>
+            </Frame>
+            <Button Text="Добавить подзадачу"
+                    Margin="10, 15, 10, 0"
+                    Background="DarkGreen"
+                    Command="{Binding AddSubTaskCommand}"/>
+        </VerticalStackLayout>
+        <CollectionView ItemsSource="{Binding SubTasks}" 
+                        SelectionMode="None"
+                        Grid.Row="1"
+                        Margin="10, 10, 10, 10">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border HeightRequest="60"
+                            Stroke="Transparent"
+                            Padding="13"
+                            StrokeShape="RoundRectangle 10">
+                        <Grid>
+                            <Image 
+                                HeightRequest="25"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"
+                                Source="Images/trash.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource 
+                                                            AncestorType={x:Type viewmodels:TaskAddingViewModel}}, Path=RemoveSubTaskCommand}"
+                                                            CommandParameter="{Binding}"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label 
+                                Text="{Binding Title}"
+                                VerticalOptions="Center"
+                                FontSize="17" 
+                                FontAttributes="Bold"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button 
+            Grid.Row="1"
+            ImageSource="Images/check1.png"
+            Background="green"
+            Margin="0, 0, 30, 30"
+            FontAttributes="Bold"
+            Padding="0"
+            FontSize="35"
+            Command="{Binding CreateTaskCommand}"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            CornerRadius="40"
+            WidthRequest="65"
+            HeightRequest="65" >
             <Button.Triggers>
                 <Trigger TargetType="Button" Property="Button.IsPressed" Value="True">
                     <Trigger.EnterActions>
@@ -52,10 +128,27 @@
                 </Trigger>
             </Button.Triggers>
         </Button>
-        <Button Text="Отменить" 
-                Margin="10, 10, 10, 0" 
-                FontSize="18"
-                Command="{Binding CancelCreationCommand}"
-                BackgroundColor="Red"/>
-    </VerticalStackLayout>
+        <Button 
+            Grid.Row="1"
+            ImageSource="Images/cross.png"
+            Background="red"
+            Margin="0, 0, 110, 30"
+            FontAttributes="Bold"
+            Padding="0"
+            FontSize="35"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            CornerRadius="40"
+            WidthRequest="65"
+            Command="{Binding CancelCreationCommand}"
+            HeightRequest="65" >
+            <Button.Triggers>
+                <Trigger TargetType="Button" Property="Button.IsPressed" Value="True">
+                    <Trigger.EnterActions>
+                        <animations:ButtonScaleAnimation/>
+                    </Trigger.EnterActions>
+                </Trigger>
+            </Button.Triggers>
+        </Button>
+    </Grid>
 </ContentPage>
