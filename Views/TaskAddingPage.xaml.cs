@@ -10,10 +10,5 @@ public partial class TaskAddingPage : ContentPage
 		InitializeComponent();
 	}
 
-    protected override bool OnBackButtonPressed()
-    {
-        base.OnBackButtonPressed();
-		Shell.Current.GoToAsync("//" + nameof(MainPage));
-		return true;
-    }
+	protected override bool OnBackButtonPressed() => true;
 }

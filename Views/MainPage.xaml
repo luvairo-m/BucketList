@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:BucketList"
-             xmlns:converters="clr-namespace:BucketList.Converters"
              xmlns:viewmodels="clr-namespace:BucketList.ViewModels"
              xmlns:animations="clr-namespace:BucketList.Animations"
              x:Class="BucketList.MainPage"
@@ -60,17 +59,6 @@
                             StrokeShape="RoundRectangle 10">
                         <Grid RowDefinitions="Auto, Auto, Auto"
                               ColumnDefinitions="1*, 0.3*">
-                            <!--<Image 
-                                HeightRequest="25"
-                                Grid.Column="1"
-                                Grid.RowSpan="3"
-                                Source="Images/trash.png">
-                                <Image.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource 
-                                        AncestorType={x:Type viewmodels:MainViewModel}}, Path=RemoveTaskCommand}"
-                                                          CommandParameter="{Binding}"/>
-                                </Image.GestureRecognizers>
-                            </Image>-->
                             <Label
                                 Grid.Column="1"
                                 Grid.RowSpan="3"
@@ -92,7 +80,7 @@
                             <Label 
                                 Margin="0, 10, 0, 0"
                                 Grid.Row="2"
-                                Text="{Binding CreationTime, Converter={converters:TimePrettifyerConverter}}"
+                                Text="{Binding TimeLine}"
                                 FontSize="12"/>
                         </Grid>
                     </Border>

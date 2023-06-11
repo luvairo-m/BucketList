@@ -19,62 +19,81 @@
             <Label 
                 Margin="0, 10, 0, 0"
                 HorizontalOptions="Center"
-                FontSize="15"
-                Text="Создание цели: заголовок + описание"
+                FontSize="14"
+                FontAttributes="Italic"
+                Text="Цель: заголовок + описание + дата"
                 />
             <Frame Margin="10, 15, 10, 0"
                    BackgroundColor="#2C3594"
                    BorderColor="Transparent">
                 <VerticalStackLayout Margin="-12">
-                    <Entry x:Name="title"
-                            TextColor="White"
-                            Text="{Binding TaskTitle, Mode=TwoWay, TargetNullValue=''}"/>
-                    <Label HorizontalOptions="End"
-                            Margin="0, 0, 10, 0"
+                    <Entry TextColor="White"
+                           Text="{Binding TaskTitle, Mode=TwoWay, TargetNullValue=''}"/>
+                    <Label  HorizontalOptions="Center"
+                            Margin="0, -7, 10, 0"
                             FontSize="12"
-                            Text="{Binding Source={x:Reference title}, Path=Text.Length, StringFormat='Символов: {0}'}"/>
-                </VerticalStackLayout>
-            </Frame>
-            <Frame Margin="10, 15, 10, 0"
-                   BackgroundColor="#2C3594"
-                   CornerRadius="10"
-                   Padding="0"
-                   BorderColor="Transparent">
-                <VerticalStackLayout Margin="10">
+                            TextColor="Gray"
+                            Text="Заголовок"/>
                     <Editor x:Name="description"
-                                HeightRequest="120"
+                                HeightRequest="100"
                                 BackgroundColor="Transparent"
                                 TextColor="White"
                                 Text="{Binding TaskDescription, Mode=TwoWay, TargetNullValue=''}"/>
-                    <Label HorizontalOptions="End"
-                               Margin="0, 0, 10, 0"
-                               FontSize="12"
-                               Text="{Binding Source={x:Reference description}, Path=Text.Length, StringFormat='Символов: {0}'}"/>
+                    <Label HorizontalOptions="Center"
+                           Margin="0, -7, 10, 0"
+                           FontSize="12"
+                           TextColor="Gray"
+                           Text="Описание"/>
+                    <DatePicker TextColor="White" 
+                                Format="D"
+                                Date="{Binding DeadLine, Mode=OneWayToSource}"
+                                />
+                    <Label HorizontalOptions="Center"
+                           Margin="0, -7, 10, 0"
+                           TextColor="Gray"
+                           FontSize="12"
+                           Text="Дата окончания"/>
                 </VerticalStackLayout>
             </Frame>
             <Label 
                 Margin="0, 10, 0, 0"
                 HorizontalOptions="Center"
-                FontSize="15"
-                Text="Создание подзадач: заголовок"
+                FontSize="14"
+                FontAttributes="Italic"
+                Text="Подзадача: заголовок"
                 />
             <Frame Margin="10, 15, 10, 0"
                        BackgroundColor="#2C3594"
                        BorderColor="Transparent">
                 <VerticalStackLayout Margin="-12">
-                    <Entry TextColor="White" 
+                    <Entry TextColor="White" IsEnabled="{Binding IsKeyboardEnabled, Mode=TwoWay}"
                            Text="{Binding SubTaskTitle, Mode=TwoWay, TargetNullValue=''}"/>
                 </VerticalStackLayout>
             </Frame>
             <Button Text="Добавить подзадачу"
                     Margin="10, 15, 10, 0"
-                    Background="DarkGreen"
-                    Command="{Binding AddSubTaskCommand}"/>
+                    CornerRadius="20"
+                    TextColor="White"
+                    HeightRequest="50"
+                    FontAttributes="Bold"
+                    Background="DodgerBlue"
+                    Command="{Binding AddSubTaskCommand}">
+                <Button.Triggers>
+                    <Trigger TargetType="Button" Property="Button.IsEnabled" Value="False">
+                        <Setter Property="Background" Value="Gray"/>
+                    </Trigger>
+                </Button.Triggers>
+            </Button>
         </VerticalStackLayout>
         <CollectionView ItemsSource="{Binding SubTasks}" 
-                        SelectionMode="None"
+                        SelectionMode="Single"
                         Grid.Row="1"
-                        Margin="10, 10, 10, 10">
+                        Margin="10, 0, 10, 10"
+                        HorizontalScrollBarVisibility="Always"
+                        ItemsUpdatingScrollMode="KeepLastItemInView"
+                        SelectedItem="{Binding SelectedSubTask, Mode=TwoWay}"
+                        SelectionChangedCommand="{Binding EditSubTaskCommand}"
+                        SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
             </CollectionView.ItemsLayout>
@@ -84,19 +103,25 @@
                             Stroke="Transparent"
                             Padding="13"
                             StrokeShape="RoundRectangle 10">
-                        <Grid>
-                            <Image 
-                                HeightRequest="25"
-                                VerticalOptions="Center"
-                                HorizontalOptions="End"
-                                Source="Images/trash.png">
-                                <Image.GestureRecognizers>
+                        <Grid Margin="-7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".9*"/>
+                                <ColumnDefinition Width=".15*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="1"
+                                    Margin="0, 0, 5, 0">
+                                <Image  
+                                    Grid.Column="1"
+                                    HeightRequest="30"
+                                    Source="Images/trashdelete.png"/>
+                                <Grid.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource 
-                                                            AncestorType={x:Type viewmodels:TaskAddingViewModel}}, Path=RemoveSubTaskCommand}"
-                                                            CommandParameter="{Binding}"/>
-                                </Image.GestureRecognizers>
-                            </Image>
+                                                          AncestorType={x:Type viewmodels:TaskAddingViewModel}}, Path=RemoveSubTaskCommand}"
+                                                          CommandParameter="{Binding}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
                             <Label 
+                                Margin="10, 0, 10, 0"
                                 Text="{Binding Title}"
                                 VerticalOptions="Center"
                                 FontSize="17" 
@@ -125,6 +150,9 @@
                     <Trigger.EnterActions>
                         <animations:ButtonScaleAnimation/>
                     </Trigger.EnterActions>
+                </Trigger>
+                <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="Gray"/>
                 </Trigger>
             </Button.Triggers>
         </Button>

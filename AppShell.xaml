@@ -6,11 +6,11 @@
     xmlns:local="clr-namespace:BucketList"
     Shell.FlyoutBehavior="Disabled">
     <ShellContent
-        Title="BucketList: v. 0.2"
+        Title="BucketList: Список целей"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
     <ShellContent
-        Title="Создание задачи"
+        Title="BucketList: Создание цели"
         ContentTemplate="{DataTemplate local:TaskAddingPage}"
         Route="TaskAddingPage" />
 </Shell>

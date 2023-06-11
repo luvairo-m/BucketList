@@ -40,6 +40,7 @@
 	  <None Remove="Resources\Images\check1.png" />
 	  <None Remove="Resources\Images\cross.png" />
 	  <None Remove="Resources\Images\trash.png" />
+	  <None Remove="Resources\Images\trashdelete.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -55,9 +56,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\DeletionConfirmationPopup.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\TaskAddingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
