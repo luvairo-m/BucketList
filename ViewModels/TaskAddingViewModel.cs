@@ -2,7 +2,6 @@
 using BucketList.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Maui.Alerts;
 using System.Collections.ObjectModel;
 using Toast = CommunityToolkit.Maui.Alerts.Toast;
 using CommunityToolkit.Maui.Core;

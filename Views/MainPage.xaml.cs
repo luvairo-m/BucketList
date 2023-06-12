@@ -1,5 +1,7 @@
 ﻿using BucketList.Models;
 using BucketList.ViewModels;
+using BucketList.Views;
+using CommunityToolkit.Maui.Views;
 
 namespace BucketList;
 
@@ -21,8 +23,6 @@ public partial class MainPage : ContentPage
 			(BindingContext as MainViewModel).Tasks.Remove(task);
     }
 
-    private void OnInfoButtonClicked(object sender, TappedEventArgs e)
-    {
-
-    }
+    private async void OnInfoButtonClicked(object sender, TappedEventArgs e) =>
+		await this.ShowPopupAsync(new InformationPopup(e.Parameter as TaskModel));
 }

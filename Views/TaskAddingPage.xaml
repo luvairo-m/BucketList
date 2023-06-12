@@ -26,18 +26,18 @@
                    BackgroundColor="#2C3594"
                    BorderColor="Transparent">
                 <VerticalStackLayout Margin="-12">
-                    <Entry TextColor="White"
-                           Text="{Binding TaskTitle, Mode=TwoWay, TargetNullValue=''}"/>
+                    <Entry  TextColor="White"
+                            Text="{Binding TaskTitle, Mode=TwoWay, TargetNullValue=''}"/>
                     <Label  HorizontalOptions="Center"
                             Margin="0, -7, 10, 0"
                             FontSize="12"
                             TextColor="Gray"
                             Text="Заголовок"/>
                     <Editor x:Name="description"
-                                HeightRequest="100"
-                                BackgroundColor="Transparent"
-                                TextColor="White"
-                                Text="{Binding TaskDescription, Mode=TwoWay, TargetNullValue=''}"/>
+                            HeightRequest="100"
+                            BackgroundColor="Transparent"
+                            TextColor="White"
+                            Text="{Binding TaskDescription, Mode=TwoWay, TargetNullValue=''}"/>
                     <Label HorizontalOptions="Center"
                            Margin="0, -7, 10, 0"
                            FontSize="12"
