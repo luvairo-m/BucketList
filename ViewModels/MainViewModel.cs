@@ -17,15 +17,6 @@ namespace BucketList.ViewModels
             Tasks.Add(task);
         }
 
-        //[RelayCommand]
-        //private async void RemoveTask(object param)
-        //{
-        //    var status = await App.Current.MainPage.ShowPopupAsync(new DeletionConfirmationPopup());
-
-        //    if ((bool)status)
-        //        Tasks.Remove((TaskModel)param);
-        //}
-
         [RelayCommand]
         private async void AddTask() => await Shell.Current.GoToAsync("//" + nameof(TaskAddingPage));
     }

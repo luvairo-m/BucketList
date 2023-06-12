@@ -21,8 +21,7 @@
                 HorizontalOptions="Center"
                 FontSize="14"
                 FontAttributes="Italic"
-                Text="Цель: заголовок + описание + дата"
-                />
+                Text="Цель: заголовок + описание + дата"/>
             <Frame Margin="10, 15, 10, 0"
                    BackgroundColor="#2C3594"
                    BorderColor="Transparent">
