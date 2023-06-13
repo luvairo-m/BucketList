@@ -48,19 +48,12 @@
                                     <ColumnDefinition Width=".15*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Column="1"
-                                    Margin="0, 0, 5, 0">
+                                      Margin="0, 0, 5, 0">
                                     <CheckBox
-                                        x:Name="checkBox"
                                         Grid.Column="1"
                                         Color="Green"
-                                        IsChecked="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:InformationPopupViewModel}},
-                                                    Path=IsFinished, Mode=TwoWay}"
+                                        IsChecked="{Binding IsCompleted, Mode=TwoWay}"
                                         HeightRequest="30"/>
-                                    <!--<Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource 
-                                                          AncestorType={x:Type viewmodels:TaskAddingViewModel}}, Path=RemoveSubTaskCommand}"
-                                                          CommandParameter="{Binding}"/>
-                                    </Grid.GestureRecognizers>-->
                                 </Grid>
                                 <Label 
                                     Margin="10, 0, 10, 0"
@@ -69,8 +62,7 @@
                                     FontSize="17" 
                                     FontAttributes="Bold">
                                     <Label.Triggers>
-                                        <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference checkBox},
-                                            Path=IsChecked}" Value="True">
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsCompleted}" Value="True">
                                             <Setter Property="TextDecorations" Value="Strikethrough"/>
                                         </DataTrigger>
                                     </Label.Triggers>

@@ -114,7 +114,7 @@
                                     FontSize="16"
                                     HorizontalTextAlignment="Center"
                                     VerticalTextAlignment="Center"
-                                    Text="{Binding UncompletedTasksLine}"
+                                    Text="{Binding CompletedTaskLine}"
                                     />
                                 <Label 
                                     Text="{Binding Title}"
