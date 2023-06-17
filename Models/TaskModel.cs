@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace BucketList.Models
 {
@@ -9,13 +10,11 @@ namespace BucketList.Models
         public DateTime CreationTime { get; private set; }
         public DateTime DeadLine { get; private set; }
 
-        public List<SubTaskModel> SubTasks { get; private set; } = new();
-
-        public int CompletedCount { get { return SubTasks.Where(x => x.IsCompleted).Count(); } }
-
-        public string CompletedTaskLine => $"{CompletedCount} / {SubTasks.Count}";
-
+        public ObservableCollection<SubTaskModel> SubTasks { get; private set; } = new();
         public string TimeLine => $"{CreationTime:d} => {DeadLine:d}";
+
+        [ObservableProperty]
+        public int completedTaskCount;
 
         public TaskModel(string title, string description, DateTime deadLine)
         {

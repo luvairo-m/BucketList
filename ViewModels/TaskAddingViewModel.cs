@@ -110,7 +110,10 @@ namespace BucketList.ViewModels
             }
 
             var task = new TaskModel(TaskTitle, TaskDescription, DeadLine);
-            task.SubTasks.AddRange(SubTasks);
+
+            foreach (var subTask in SubTasks)
+                task.SubTasks.Add(subTask);
+
             var arguments = new Dictionary<string, object>()
             {
                 ["TaskObject"] = task
