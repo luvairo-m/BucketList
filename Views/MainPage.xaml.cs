@@ -9,22 +9,32 @@ namespace BucketList;
 
 public partial class MainPage : ContentPage
 {
+	public static object Context;
+
 	private int clickCount = 0;
 
 	public MainPage()
 	{
 		BindingContext = new MainViewModel();
+		Context = BindingContext;
 		InitializeComponent();
 	}
 
     private async void OnDeleteButtonClicked(object sender, TappedEventArgs e)
     {
 		var task = e.Parameter as TaskModel;
-		var status = await Application.Current.MainPage.DisplayAlert("Удаление цели",
-			"Вы действительно хотите удалить цель?", "Да", "Нет");
+		var status = await Application.Current.MainPage.DisplayAlert("Завершение цели",
+			"Вы действительно хотите завершить цель?", "Да", "Нет");
 
-		if (status) 
-			(BindingContext as MainViewModel).Tasks.Remove(task);
+		if (status)
+		{
+			var viewModel = BindingContext as MainViewModel;
+
+			viewModel.CompletedTasks.Add(task);
+			viewModel.Tasks.Remove(task);
+
+            Toast.Make("Цель отмечена, как выполненная!", ToastDuration.Long).Show();
+        }
     }
 
     private async void OnInfoButtonClicked(object sender, TappedEventArgs e) =>

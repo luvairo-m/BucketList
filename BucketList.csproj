@@ -45,6 +45,8 @@
 	  <None Remove="Resources\Images\info.png" />
 	  <None Remove="Resources\Images\information.png" />
 	  <None Remove="Resources\Images\list.png" />
+	  <None Remove="Resources\Images\noresults.png" />
+	  <None Remove="Resources\Images\results.png" />
 	  <None Remove="Resources\Images\trash.png" />
 	  <None Remove="Resources\Images\trashdelete.png" />
 	</ItemGroup>
@@ -62,6 +64,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\CompletedTaskPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\InformationPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
