@@ -32,10 +32,9 @@
     <ShellContent
         FlyoutIcon="Images/check.png"
         Title="Выполненные цели"
-        ContentTemplate="{DataTemplate views:CompletedTaskPage}"
-        />
+        ContentTemplate="{DataTemplate views:CompletedTaskPage}" />
     <ShellContent
         FlyoutIcon="Images/information.png"
         Title="Справка"
-        />
+        ContentTemplate="{DataTemplate views:HelpPage}" />
 </Shell>
