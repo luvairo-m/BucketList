@@ -37,17 +37,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\accept.png" />
 	  <None Remove="Resources\Images\achievement.png" />
 	  <None Remove="Resources\Images\check.png" />
 	  <None Remove="Resources\Images\check1.png" />
 	  <None Remove="Resources\Images\cross.png" />
+	  <None Remove="Resources\Images\empty.png" />
 	  <None Remove="Resources\Images\info.png" />
 	  <None Remove="Resources\Images\information.png" />
 	  <None Remove="Resources\Images\list.png" />
 	  <None Remove="Resources\Images\noresults.png" />
-	  <None Remove="Resources\Images\results.png" />
-	  <None Remove="Resources\Images\trash.png" />
 	  <None Remove="Resources\Images\trashdelete.png" />
 	</ItemGroup>
 

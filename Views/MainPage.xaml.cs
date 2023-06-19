@@ -27,18 +27,26 @@ public partial class MainPage : ContentPage
 			"Вы действительно хотите завершить цель?", "Да", "Нет");
 
 		if (status)
-		{
-			var viewModel = BindingContext as MainViewModel;
-
-			viewModel.CompletedTasks.Add(task);
-			viewModel.Tasks.Remove(task);
-
-            Toast.Make("Цель отмечена, как выполненная!", ToastDuration.Long).Show();
-        }
+			DeleteTask(task);
     }
 
-    private async void OnInfoButtonClicked(object sender, TappedEventArgs e) =>
-		await this.ShowPopupAsync(new InformationPopup(e.Parameter as TaskModel));
+    private async void OnInfoButtonClicked(object sender, TappedEventArgs e)
+	{
+		var taskModel = e.Parameter as TaskModel;
+
+		if ((bool)await this.ShowPopupAsync(new InformationPopup(taskModel)))
+			DeleteTask(taskModel);
+	}
+
+	private void DeleteTask(TaskModel task)
+	{
+        var viewModel = BindingContext as MainViewModel;
+
+        viewModel.CompletedTasks.Add(task);
+        viewModel.Tasks.Remove(task);
+
+        Toast.Make("Цель отмечена, как выполненная!", ToastDuration.Long).Show();
+    }
 
     protected override bool OnBackButtonPressed()
     {

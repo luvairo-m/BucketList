@@ -14,11 +14,21 @@ public partial class InformationPopup : Popup
     {
         currentTask = task;
         BindingContext = new InformationPopupViewModel(task);
+
+        if (currentTask.SubTasks.Count == 0)
+            finishButton.IsEnabled = true;
     }
 
-    private void CloseButtonClicked(object sender, EventArgs e)
+    private void SaveButtonClicked(object sender, EventArgs e) => Close(false);
+
+    private void FinishButtonClicked(object sender, EventArgs e) => Close(true);
+
+    private void OnCheck(object sender, CheckedChangedEventArgs e)
     {
-        currentTask.CompletedTaskCount = currentTask.SubTasks.Where(task => task.IsCompleted).Count();
-        Close();
+        var completedCount = currentTask.SubTasks.Where(task => task.IsCompleted).Count();
+        currentTask.CompletedTaskCount = completedCount;
+
+        if (completedCount == currentTask.SubTasks.Count) finishButton.IsEnabled = true;
+        else finishButton.IsEnabled = false;    
     }
 }
