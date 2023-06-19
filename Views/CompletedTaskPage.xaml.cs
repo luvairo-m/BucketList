@@ -9,4 +9,6 @@ public partial class CompletedTaskPage : ContentPage
 		BindingContext = new CompletedTaskViewModel((MainPage.Context as MainViewModel).CompletedTasks);
 		InitializeComponent();
 	}
+
+	protected override bool OnBackButtonPressed() => true;
 }

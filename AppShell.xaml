@@ -20,7 +20,7 @@
         <DataTemplate>
             <VerticalStackLayout>
                 <Image Source="Images/achievement.png" Margin="60, 30, 60, 0"/>
-                <Label Text="Точно в цель!" FontSize="19" HorizontalOptions="Center" Margin="5, 5, 5, 30" FontAttributes="Italic"/>
+                <Label Text="Через тернии к целям!" FontSize="19" HorizontalOptions="Center" Margin="5, 5, 5, 30" FontAttributes="Italic"/>
             </VerticalStackLayout>
         </DataTemplate>
     </Shell.FlyoutHeaderTemplate>
