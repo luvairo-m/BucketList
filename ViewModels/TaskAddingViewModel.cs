@@ -102,6 +102,9 @@ namespace BucketList.ViewModels
 
             var task = new TaskModel(TaskTitle, TaskDescription, DeadLine);
 
+            if (subTaskTitle != string.Empty)
+                AddSubTask();
+
             foreach (var subTask in SubTasks)
                 task.SubTasks.Add(subTask);
 

@@ -23,8 +23,8 @@ public partial class MainPage : ContentPage
     private async void OnDeleteButtonClicked(object sender, TappedEventArgs e)
     {
 		var task = e.Parameter as TaskModel;
-		var status = await Application.Current.MainPage.DisplayAlert("Завершение цели",
-			"Вы действительно хотите завершить цель?", "Да", "Нет");
+		var status = await Application.Current.MainPage.DisplayAlert("Удаление цели",
+			"Вы действительно хотите удалить цель? Она не будет считаться выполненной.", "Да", "Нет");
 
 		if (status)
 			DeleteTask(task);
@@ -35,17 +35,22 @@ public partial class MainPage : ContentPage
 		var taskModel = e.Parameter as TaskModel;
 
 		if ((bool)await this.ShowPopupAsync(new InformationPopup(taskModel)))
-			DeleteTask(taskModel);
+			DeleteTask(taskModel, true);
 	}
 
-	private void DeleteTask(TaskModel task)
+	private void DeleteTask(TaskModel task, bool addToCompleted = false)
 	{
         var viewModel = BindingContext as MainViewModel;
 
-        viewModel.CompletedTasks.Add(task);
+		if (addToCompleted)
+			viewModel.CompletedTasks.Add(task);
+
         viewModel.Tasks.Remove(task);
 
-        Toast.Make("Цель отмечена, как выполненная!", ToastDuration.Long).Show();
+		if (addToCompleted)
+			Toast.Make("Цель отмечена, как выполненная!", ToastDuration.Long).Show();
+		else
+            Toast.Make("Цель удалена!", ToastDuration.Long).Show();
     }
 
     protected override bool OnBackButtonPressed()

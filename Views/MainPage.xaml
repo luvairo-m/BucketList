@@ -93,7 +93,7 @@
                                         Grid.RowSpan="2"
                                         WidthRequest="40"
                                         HeightRequest="40"
-                                        Source="Images/check.png">
+                                        Source="Images/trashdelete.png">
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer CommandParameter="{Binding}" Tapped="OnDeleteButtonClicked"/>
                                         </Image.GestureRecognizers>

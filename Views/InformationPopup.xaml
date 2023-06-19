@@ -22,9 +22,9 @@
                 VerticalOptions="Center" 
                 HorizontalOptions="Center"
                 FontAttributes="Italic"
-                Margin="10, 0, 10, 0"
+                Margin="5, 0, 5, 0"
                 FontSize="22"/>
-            <Frame Margin="10, 5, 10, 0"
+            <Frame Margin="0, 5, 0, 0"
                    Grid.Row="1"
                    BackgroundColor="#2C3594"
                    BorderColor="Transparent">
