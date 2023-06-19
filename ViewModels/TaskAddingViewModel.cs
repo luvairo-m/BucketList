@@ -52,12 +52,12 @@ namespace BucketList.ViewModels
                 return;
 
             var action = await Application.Current.MainPage.DisplayActionSheet("Выберите действие",
-                "Отменить", null, "Редактировать подзадачу", "Изменить порядок подзадач");
+                "Отменить", null, "Редактировать подзадачу", "Изменить порядок подзадач", "Удалить подзадачу");
 
             if (action == "Редактировать подзадачу")
             {
                 var newTitle = await Application.Current.MainPage.DisplayPromptAsync("Редактирование",
-                    "Новый заголовок подзадачи:", "Принять", "Отменить", initialValue: SelectedSubTask.Title);
+                    "Введите новый заголовок подзадачи:", "Принять", null, initialValue: SelectedSubTask.Title);
 
                 if (newTitle != null && newTitle != string.Empty)
                 {
@@ -70,7 +70,7 @@ namespace BucketList.ViewModels
             else if (action == "Изменить порядок подзадач")
             {
                 var movement = await Application.Current.MainPage.DisplayPromptAsync("Изменение порядка следования",
-                    $"Укажите новую позицию (от 1 до {SubTasks.Count}):", "Принять", "Отменить");
+                    $"Укажите новую позицию (от 1 до {SubTasks.Count}):", "Принять", null);
 
                 if (movement != null)
                     if (int.TryParse(movement, out int index))
@@ -84,6 +84,9 @@ namespace BucketList.ViewModels
                     else
                         await Toast.Make("Некорректное число", ToastDuration.Long).Show();
             }
+
+            else if (action == "Удалить подзадачу")
+                SubTasks.Remove(SelectedSubTask);
 
             SelectedSubTask = null;
         }

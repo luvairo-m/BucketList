@@ -20,12 +20,12 @@
         </Grid.RowDefinitions>
         <VerticalStackLayout>
             <Label 
-                Margin="0, 10, 0, 0"
+                Margin="0, 5, 0, 0"
                 HorizontalOptions="Center"
                 FontSize="14"
                 FontAttributes="Italic"
                 Text="Цель: заголовок + описание + дата"/>
-            <Frame Margin="10, 15, 10, 0"
+            <Frame Margin="10, 5, 10, 0"
                    BackgroundColor="#2C3594"
                    BorderColor="Transparent">
                 <VerticalStackLayout Margin="-12">
@@ -37,19 +37,18 @@
                             TextColor="Gray"
                             Text="Заголовок"/>
                     <Editor x:Name="description"
-                            HeightRequest="100"
+                            HeightRequest="120"
                             BackgroundColor="Transparent"
                             TextColor="White"
                             Text="{Binding TaskDescription, Mode=TwoWay, TargetNullValue=''}"/>
                     <Label HorizontalOptions="Center"
-                           Margin="0, -7, 10, 0"
+                           Margin="0, -7, 10, 10"
                            FontSize="12"
                            TextColor="Gray"
                            Text="Описание"/>
                     <DatePicker TextColor="White" 
                                 Format="D"
-                                Date="{Binding DeadLine, Mode=OneWayToSource}"
-                                />
+                                Date="{Binding DeadLine, Mode=OneWayToSource}"/>
                     <Label HorizontalOptions="Center"
                            Margin="0, -7, 10, 0"
                            TextColor="Gray"
@@ -58,22 +57,27 @@
                 </VerticalStackLayout>
             </Frame>
             <Label 
-                Margin="0, 10, 0, 0"
+                Margin="0, 5, 0, 0"
                 HorizontalOptions="Center"
                 FontSize="14"
                 FontAttributes="Italic"
                 Text="Подзадача: заголовок"
                 />
-            <Frame Margin="10, 15, 10, 0"
+            <Frame Margin="10, 5, 10, 0"
                        BackgroundColor="#2C3594"
                        BorderColor="Transparent">
                 <VerticalStackLayout Margin="-12">
                     <Entry TextColor="White" IsEnabled="{Binding IsKeyboardEnabled, Mode=TwoWay}"
                            Text="{Binding SubTaskTitle, Mode=TwoWay, TargetNullValue=''}"/>
+                    <Label Text="Заголовок" 
+                           TextColor="Gray" 
+                           FontSize="12" 
+                           HorizontalTextAlignment="Center" 
+                           Margin="0, -7, 10, 0"/>
                 </VerticalStackLayout>
             </Frame>
             <Button Text="Добавить подзадачу"
-                    Margin="10, 15, 10, 0"
+                    Margin="10, 10, 10, 0"
                     CornerRadius="20"
                     TextColor="White"
                     HeightRequest="50"
@@ -135,7 +139,7 @@
         </CollectionView>
         <Button 
             Grid.Row="1"
-            ImageSource="Images/accept.png"
+            ImageSource="Images/check1.png"
             Background="green"
             Margin="0, 0, 30, 30"
             FontAttributes="Bold"
@@ -158,27 +162,5 @@
                 </Trigger>
             </Button.Triggers>
         </Button>
-        <!--<Button 
-            Grid.Row="1"
-            ImageSource="Images/cross.png"
-            Background="red"
-            Margin="0, 0, 110, 30"
-            FontAttributes="Bold"
-            Padding="0"
-            FontSize="35"
-            HorizontalOptions="End"
-            VerticalOptions="End"
-            CornerRadius="40"
-            WidthRequest="65"
-            Command="{Binding CancelCreationCommand}"
-            HeightRequest="65" >
-            <Button.Triggers>
-                <Trigger TargetType="Button" Property="Button.IsPressed" Value="True">
-                    <Trigger.EnterActions>
-                        <animations:ButtonScaleAnimation/>
-                    </Trigger.EnterActions>
-                </Trigger>
-            </Button.Triggers>
-        </Button>-->
     </Grid>
 </ContentPage>
