@@ -18,6 +18,6 @@ namespace BucketList.ViewModels
         }
 
         [RelayCommand]
-        private async void AddTask() => await Shell.Current.GoToAsync("//" + nameof(TaskAddingPage));
+        private async void AddTask() => await Shell.Current.GoToAsync(nameof(TaskAddingPage));
     }
 }

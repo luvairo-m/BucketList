@@ -1,5 +1,4 @@
-﻿using Android.Widget;
-using BucketList.Models;
+﻿using BucketList.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
@@ -36,25 +35,14 @@ namespace BucketList.ViewModels
 
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(AddSubTaskCommand))]
-        private string subTaskTitle;
-
-        private void ClearInputFields()
-        {
-            TaskTitle = null;
-            TaskDescription = null;
-            SubTaskTitle = null;
-            SubTasks.Clear();
-        }
+        private string subTaskTitle;    
 
         [RelayCommand]
         private async void CancelCreation()
         {
             if (await Application.Current.MainPage.DisplayAlert("Предупреждение",
                 "Вы действительно желаете выйти из создания цели?", "Да", "Нет"))
-            {
-                ClearInputFields();
                 await Shell.Current.GoToAsync("//" + nameof(MainPage));
-            }
         }
 
         [RelayCommand]
@@ -120,7 +108,6 @@ namespace BucketList.ViewModels
             };
 
             await Shell.Current.GoToAsync("//" + nameof(MainPage), arguments);
-            ClearInputFields();
         }
 
         [RelayCommand(CanExecute = nameof(CanSubTaskAdd))]

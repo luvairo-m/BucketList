@@ -140,6 +140,11 @@
         <Setter Property="CornerRadius" Value="8" />
     </Style>
 
+    <Style TargetType="Label" Class="FlyoutItemLabelStyle">
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+
     <Style TargetType="ImageButton">
         <Setter Property="Opacity" Value="1" />
         <Setter Property="BorderColor" Value="Transparent"/>

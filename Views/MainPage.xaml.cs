@@ -1,12 +1,16 @@
 ﻿using BucketList.Models;
 using BucketList.ViewModels;
 using BucketList.Views;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
 
 namespace BucketList;
 
 public partial class MainPage : ContentPage
 {
+	private int clickCount = 0;
+
 	public MainPage()
 	{
 		BindingContext = new MainViewModel();
@@ -25,4 +29,17 @@ public partial class MainPage : ContentPage
 
     private async void OnInfoButtonClicked(object sender, TappedEventArgs e) =>
 		await this.ShowPopupAsync(new InformationPopup(e.Parameter as TaskModel));
+
+    protected override bool OnBackButtonPressed()
+    {
+		if (++clickCount == 2)
+		{
+			clickCount = 0;
+			return base.OnBackButtonPressed();
+		}
+		else
+            Toast.Make("Нажмите ещё раз для выхода из приложения", ToastDuration.Long).Show();
+
+		return true;
+    }
 }
