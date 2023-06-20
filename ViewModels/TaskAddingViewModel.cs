@@ -96,7 +96,7 @@ namespace BucketList.ViewModels
         {
             if (DeadLine < DateTime.Now.AddDays(-1))
             {
-                await Application.Current.MainPage.DisplayAlert("Предупреждение", "Выбрана некорректная дата", "Принять");
+                await Application.Current.MainPage.DisplayAlert("Ошибка", "Выбрана некорректная дата.", "Принять");
                 return;
             }
 

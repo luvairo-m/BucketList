@@ -61,7 +61,7 @@ public partial class MainPage : ContentPage
 			return base.OnBackButtonPressed();
 		}
 		else
-            Toast.Make("Нажмите ещё раз для выхода из приложения", ToastDuration.Long).Show();
+            Toast.Make("Нажмите ещё раз для выхода из приложения.", ToastDuration.Long).Show();
 
 		return true;
     }
