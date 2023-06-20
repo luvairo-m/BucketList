@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace BucketList.Models
 {
@@ -10,7 +11,7 @@ namespace BucketList.Models
         public DateTime CreationTime { get; private set; }
         public DateTime DeadLine { get; private set; }
 
-        public ObservableCollection<SubTaskModel> SubTasks { get; private set; } = new();
+        public ObservableCollection<SubTaskModel> SubTasks { get; set; } = new();
         public string TimeLine => $"{CreationTime:d} => {DeadLine:d}";
 
         [ObservableProperty]
@@ -27,9 +28,11 @@ namespace BucketList.Models
 
     public partial class SubTaskModel : ObservableObject
     {
+        [JsonPropertyName("title")]
         [ObservableProperty]
         private string title;
 
+        [JsonPropertyName("isCompleted")]
         [ObservableProperty]
         private bool isCompleted;
 
