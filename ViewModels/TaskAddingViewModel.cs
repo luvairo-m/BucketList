@@ -1,63 +1,131 @@
 ﻿using BucketList.Models;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
+using Toast = CommunityToolkit.Maui.Alerts.Toast;
+using CommunityToolkit.Maui.Core;
 
 namespace BucketList.ViewModels
 {
-    internal class TaskAddingViewModel : INotifyPropertyChanged
+    internal partial class TaskAddingViewModel : ObservableObject
     {
-        public ICommand CancelCreationCommand { get; }
-        public ICommand CreateTaskCommand { get; }
-        public event PropertyChangedEventHandler PropertyChanged;
-        public string TaskTitle
-        {
-            get => taskTitle;
-            set
-            {
-                taskTitle = value;
-                OnPropertyChanged(nameof(TaskTitle));   
-            }
-        }
-        public string TaskDescription
-        {
-            get => taskDescription;
-            set
-            {
-                taskDescription = value;    
-                OnPropertyChanged(nameof(TaskDescription));
-            }
-        }
+        public bool CanTaskCreate => TaskTitle != null && TaskDescription != null &&
+            TaskTitle.Length != 0 && TaskDescription.Length != 0;
 
+        public bool CanSubTaskAdd => SubTaskTitle != null && SubTaskTitle.Length != 0;
+
+        public ObservableCollection<SubTaskModel> SubTasks { get; } = new();
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(CreateTaskCommand))]
         private string taskTitle;
-        private string taskDescription;  
 
-        internal TaskAddingViewModel()
+        [ObservableProperty]
+        private bool isKeyboardEnabled = true;
+
+        [ObservableProperty]
+        private DateTime deadLine;
+
+        [ObservableProperty]
+        private SubTaskModel selectedSubTask;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(CreateTaskCommand))]
+        private string taskDescription;
+
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(AddSubTaskCommand))]
+        private string subTaskTitle;    
+
+        [RelayCommand]
+        private async void CancelCreation()
         {
-            CancelCreationCommand = new Command(async () =>
-            {
-                await Shell.Current.GoToAsync("//MainPage");
-                ClearFields();
-            });
+            if (await Application.Current.MainPage.DisplayAlert("Предупреждение",
+                "Вы действительно желаете выйти из создания цели?", "Да", "Нет"))
+                await Shell.Current.GoToAsync("//" + nameof(MainPage));
+        }
 
-            CreateTaskCommand = new Command(async () =>
+        [RelayCommand]
+        private async void EditSubTask(object param)
+        {
+            if (SelectedSubTask == null)
+                return;
+
+            var action = await Application.Current.MainPage.DisplayActionSheet("Выберите действие",
+                "Отменить", null, "Редактировать подзадачу", "Изменить порядок подзадач", "Удалить подзадачу");
+
+            if (action == "Редактировать подзадачу")
             {
-                await Shell.Current.GoToAsync("//MainPage", new Dictionary<string, object>
+                var newTitle = await Application.Current.MainPage.DisplayPromptAsync("Редактирование",
+                    "Введите новый заголовок подзадачи:", "Принять", null, initialValue: SelectedSubTask.Title);
+
+                if (newTitle != null && newTitle != string.Empty)
                 {
-                    { "TaskObject", new TaskModel(TaskTitle, TaskDescription) }
-                });
+                    var index = SubTasks.IndexOf(SelectedSubTask);
+                    SubTasks.Remove(SelectedSubTask);
+                    SubTasks.Insert(index, new(newTitle));
+                }
+            }
 
-                ClearFields();
-            }, () => taskTitle != null && taskDescription != null &&
-            taskTitle.Length != 0 && taskDescription.Length != 0);
+            else if (action == "Изменить порядок подзадач")
+            {
+                var movement = await Application.Current.MainPage.DisplayPromptAsync("Изменение порядка следования",
+                    $"Укажите новую позицию (от 1 до {SubTasks.Count}):", "Принять", null);
+
+                if (movement != null)
+                    if (int.TryParse(movement, out int index))
+                        if (index > 0 && index <= SubTasks.Count)
+                        {
+                            var currentPosition = SubTasks.IndexOf(SelectedSubTask);
+                            (SubTasks[currentPosition], SubTasks[index - 1]) = (SubTasks[index - 1], SubTasks[currentPosition]);
+                        }
+                        else
+                            await Toast.Make("Некорректная позиция", ToastDuration.Long).Show();
+                    else
+                        await Toast.Make("Некорректное число", ToastDuration.Long).Show();
+            }
+
+            else if (action == "Удалить подзадачу")
+                SubTasks.Remove(SelectedSubTask);
+
+            SelectedSubTask = null;
         }
 
-        public void OnPropertyChanged([CallerMemberName] string property = "")
+        [RelayCommand(CanExecute = nameof(CanTaskCreate))]
+        private async void CreateTask()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-            ((Command)CreateTaskCommand).ChangeCanExecute();
+            if (DeadLine < DateTime.Now.AddDays(-1))
+            {
+                await Application.Current.MainPage.DisplayAlert("Ошибка", "Выбрана некорректная дата.", "Принять");
+                return;
+            }
+
+            var task = new TaskModel(TaskTitle, TaskDescription, DeadLine);
+
+            if (subTaskTitle != string.Empty)
+                AddSubTask();
+
+            foreach (var subTask in SubTasks)
+                task.SubTasks.Add(subTask);
+
+            var arguments = new Dictionary<string, object>()
+            {
+                ["TaskObject"] = task
+            };
+
+            await Shell.Current.GoToAsync("//" + nameof(MainPage), arguments);
         }
 
-        private void ClearFields() => (TaskTitle, TaskDescription) = (null, null);
+        [RelayCommand(CanExecute = nameof(CanSubTaskAdd))]
+        private void AddSubTask()
+        {
+            SubTasks.Add(new(SubTaskTitle));
+            SubTaskTitle = null;
+            IsKeyboardEnabled = false;
+            IsKeyboardEnabled = true;
+        }
+
+        [RelayCommand]
+        private void RemoveSubTask(object param) => SubTasks.Remove(param as SubTaskModel);
     }
 }

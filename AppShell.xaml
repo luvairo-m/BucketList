@@ -5,17 +5,36 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:BucketList"
     xmlns:views="clr-namespace:BucketList.Views"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Flyout"
+    Shell.FlyoutWidth="300"
+    FlyoutBackgroundColor="MediumBlue">
+    <Shell.FlyoutFooterTemplate>
+        <DataTemplate>
+            <VerticalStackLayout>
+                <Label Text="Bucket list" HorizontalOptions="Center" FontSize="18" FontAttributes="Bold"/>
+                <Label Text="Version: 3.4 (stable)" HorizontalOptions="Center" Margin="0, 0, 0, 10"/>
+            </VerticalStackLayout>
+        </DataTemplate>
+    </Shell.FlyoutFooterTemplate>
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <VerticalStackLayout>
+                <Image Source="Images/achievement.png" Margin="60, 30, 60, 0"/>
+                <Label Text="Через тернии к целям!" FontSize="19" HorizontalOptions="Center" Margin="5, 5, 5, 30" FontAttributes="Italic"/>
+            </VerticalStackLayout>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
     <ShellContent
-        Title="BucketList (MVP): v. 0.2"
+        FlyoutIcon="Images/list.png"
+        Title="Список целей"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
     <ShellContent
-        Title="Task creation"
-        ContentTemplate="{DataTemplate local:TaskAddingPage}"
-        Route="TaskAddingPage" />
+        FlyoutIcon="Images/check.png"
+        Title="Выполненные цели"
+        ContentTemplate="{DataTemplate views:CompletedTaskPage}" />
     <ShellContent
-        Title="Task information"
-        ContentTemplate="{DataTemplate views:ShowTaskPage}"
-        Route="ShowTaskPage" />
+        FlyoutIcon="Images/information.png"
+        Title="Справка"
+        ContentTemplate="{DataTemplate views:HelpPage}" />
 </Shell>

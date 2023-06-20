@@ -16,16 +16,15 @@
 		<ApplicationIdGuid>3c102714-cce8-4d4f-a5a5-3f737adc2eec</ApplicationIdGuid>
 
 		<!-- Versions -->
-    <ApplicationDisplayVersion>0.1</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>3</ApplicationDisplayVersion>
+		<ApplicationVersion>3</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-
+		<!-- App Icon -->    
+    
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
     
@@ -37,12 +36,30 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+	  <None Remove="Platforms\Android\Resources\values\colors.xml" />
+	  <None Remove="Platforms\Android\Resources\values\ic_launcher_background.xml" />
+	  <None Remove="Resources\AppIcon\appicon.svg" />
+	  <None Remove="Resources\Images\achievement.png" />
+	  <None Remove="Resources\Images\check.png" />
+	  <None Remove="Resources\Images\check1.png" />
+	  <None Remove="Resources\Images\cross.png" />
+	  <None Remove="Resources\Images\empty.png" />
+	  <None Remove="Resources\Images\info.png" />
+	  <None Remove="Resources\Images\information.png" />
+	  <None Remove="Resources\Images\list.png" />
+	  <None Remove="Resources\Images\noresults.png" />
+	  <None Remove="Resources\Images\trashdelete.png" />
+	  <None Remove="Resources\Splash\splash.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Resources\Images\" />
+	  <MauiSplashScreen Include="Resources\Splash\splash.svg" />
+	</ItemGroup>
+  
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -50,14 +67,15 @@
 	    <DependentUpon>TaskAddingPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
-  <ItemGroup>
-    <Compile Update="Views\ShowTaskPage.xaml.cs">
-      <DependentUpon>TaskAddingPage.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\ShowTaskPage.xaml">
+	  <MauiXaml Update="Views\CompletedTaskPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\HelpPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\InformationPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\TaskAddingPage.xaml">

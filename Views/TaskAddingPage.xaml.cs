@@ -9,4 +9,6 @@ public partial class TaskAddingPage : ContentPage
 		BindingContext = new TaskAddingViewModel();
 		InitializeComponent();
 	}
+
+	protected override bool OnBackButtonPressed() => true;
 }

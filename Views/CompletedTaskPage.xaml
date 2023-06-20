@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BucketList.Views.CompletedTaskPage"
+             Title="Выполненные цели"
+             Style="{StaticResource MainContentPageStyle}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.05*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Text="{Binding CompletedTasks.Count, StringFormat='Выполнено целей: {0}'}"
+               HorizontalOptions="Center"
+               Margin="5, 10, 5, 0"/>
+        <Image Grid.Row="0" Grid.RowSpan="2"  Source="Images/noresults.png"
+               HeightRequest="400"
+               IsVisible="False"
+               HorizontalOptions="Center"
+               VerticalOptions="Center">
+            <Image.Triggers>
+                <DataTrigger TargetType="Image" Binding="{Binding CompletedTasks.Count}" Value="0">
+                    <Setter Property="IsVisible" Value="True"/>
+                </DataTrigger>
+            </Image.Triggers>
+        </Image>
+        <CollectionView ItemsSource="{Binding CompletedTasks}" 
+                        SelectionMode="None"
+                        Grid.Row="1"
+                        Margin="10, 0, 10, 10"
+                        HorizontalScrollBarVisibility="Always"
+                        ItemsUpdatingScrollMode="KeepLastItemInView"
+                        SelectedItem="{Binding SelectedSubTask, Mode=TwoWay}"
+                        SelectionChangedCommand="{Binding EditSubTaskCommand}"
+                        SelectionChangedCommandParameter="{Binding Source={RelativeSource Self}, Path=SelectedItem}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border HeightRequest="60"
+                            Stroke="Transparent"
+                            Padding="13"
+                            StrokeShape="RoundRectangle 10">
+                        <Grid Margin="-7">
+                            <Label 
+                                Margin="10, 0, 10, 0"
+                                Text="{Binding Title}"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                FontSize="17" 
+                                FontAttributes="Bold"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

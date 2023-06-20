@@ -2,6 +2,7 @@
 <?xaml-comp compile="true" ?>
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:animations="clr-namespace:BucketList.Animations"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Style TargetType="ActivityIndicator">
@@ -11,12 +12,6 @@
     <Style TargetType="IndicatorView">
         <Setter Property="IndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}"/>
         <Setter Property="SelectedIndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray100}}"/>
-    </Style>
-
-    <Style TargetType="Border">
-        <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
-        <Setter Property="StrokeShape" Value="Rectangle"/>
-        <Setter Property="StrokeThickness" Value="1"/>
     </Style>
 
     <Style TargetType="BoxView">
@@ -45,6 +40,15 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+        <Style.Triggers>
+            <Trigger TargetType="{x:Type Button}" 
+                         Property="Button.IsPressed" 
+                         Value="True">
+                <Trigger.EnterActions>
+                    <animations:ButtonScaleAnimation/>
+                </Trigger.EnterActions>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="CheckBox">
@@ -136,6 +140,11 @@
         <Setter Property="CornerRadius" Value="8" />
     </Style>
 
+    <Style TargetType="Label" Class="FlyoutItemLabelStyle">
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+
     <Style TargetType="ImageButton">
         <Setter Property="Opacity" Value="1" />
         <Setter Property="BorderColor" Value="Transparent"/>
@@ -158,10 +167,11 @@
     </Style>
 
     <Style TargetType="Label">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource White}}" />
+        <Setter Property="TextColor" Value="White" />
         <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="LineBreakMode" Value="TailTruncation"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -176,6 +186,36 @@
         </Setter>
     </Style>
 
+    <Style TargetType="Border">
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Normal">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="#2C3594"/>
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="Selected">
+                        <VisualState.Setters>
+                            <Setter Property="BackgroundColor" Value="Blue" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ContentPage" x:Key="MainContentPageStyle">
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
+                    <GradientStop Color="{StaticResource BackgroundGradient1}"/>
+                    <GradientStop Color="{StaticResource BackgroundGradient2}" Offset="0.6"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style TargetType="ListView">
         <Setter Property="SeparatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
         <Setter Property="RefreshControlColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />

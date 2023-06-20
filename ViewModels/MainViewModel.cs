@@ -1,44 +1,44 @@
 ﻿using BucketList.Models;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
+using System.Text.Json;
 
 namespace BucketList.ViewModels
 {
-    internal class MainViewModel : INotifyPropertyChanged, IQueryAttributable
+    public partial class MainViewModel : IQueryAttributable
     {
-        public ICommand AddTaskCommand { get; }
-        public ICommand RemoveTaskCommand { get; }
-        public ICommand ShowTaskCommand { get; }
+        public const string saveFilename = "app_data.json";
 
-        public ObservableCollection<TaskModel> Tasks { get; } = new();
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ObservableCollection<TaskModel> Tasks { get; set; } = new();
+        public ObservableCollection<TaskModel> CompletedTasks { get; set; } = new();
 
-        internal MainViewModel()
+        public MainViewModel() => Task.Run(LoadData);
+
+        public async Task LoadData()
         {
-            ShowTaskCommand = new Command(async (param) =>
-            {
-                await Shell.Current.GoToAsync("//ShowTaskPage", new Dictionary<string, object>()
-                {
-                    { "TaskObject", (TaskModel)param }
-                });
-            });
+            var path = Path.Combine(FileSystem.AppDataDirectory, saveFilename);
 
-            AddTaskCommand = new Command(async () => await Shell.Current.GoToAsync("//TaskAddingPage"));
-            RemoveTaskCommand = new Command((param) => Tasks.Remove((TaskModel)param));
+            try
+            {
+                using var file = new StreamReader(path);
+                var data = await JsonSerializer.DeserializeAsync<SaveModel>(file.BaseStream);
+                foreach (var task in data.Tasks) Tasks.Add(task);
+                foreach (var completedTask in data.CompletedTasks) CompletedTasks.Add(completedTask);
+            } catch { }
         }
 
-        public void OnPropertyChanged([CallerMemberName] string property = "")
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        public async void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             if (!query.ContainsKey("TaskObject"))
                 return;
 
             var task = query["TaskObject"] as TaskModel;
             Tasks.Add(task);
+
+            query.Clear();
         }
+
+        [RelayCommand]
+        private async void AddTask() => await Shell.Current.GoToAsync(nameof(TaskAddingPage));
     }
 }
