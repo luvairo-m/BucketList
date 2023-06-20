@@ -49,6 +49,11 @@
 	  <None Remove="Resources\Images\list.png" />
 	  <None Remove="Resources\Images\noresults.png" />
 	  <None Remove="Resources\Images\trashdelete.png" />
+	  <None Remove="Resources\Splash\splash.svg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiSplashScreen Include="Resources\Splash\splash.svg" />
 	</ItemGroup>
   
 	<ItemGroup>
